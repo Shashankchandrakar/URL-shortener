@@ -1,20 +1,24 @@
-plugins{
-    id 'java'
-    id 'application'
+plugins {
+    id "java"
+    id "application"
+    id "io.spring.dependency-management" version("1.0.11.RELEASE")
+    id "org.springframework.boot" version("2.5.1")
 }
-
-mainClassName = 'hello.HelloWorld'
-
+group "com.system.design"
+version "1.0.0-SNAPSHOT"
 repositories {
     mavenCentral()
 }
 
-// tag::dependencies[]
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    implementation "joda-time:joda-time:2.3"
-    testImplementation "junit:junit:4.12"
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    testImplementation(group: "org.springframework.boot" , name: "spring-boot-starter-test")
 }
-// end::dependencies[]
+
+test{
+    useJUnitPlatform()
+}
