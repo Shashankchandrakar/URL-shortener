@@ -18,6 +18,10 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb'
     testImplementation(group: "org.springframework.boot", name: "spring-boot-starter-test")
+
+    // https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api
+    implementation group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
+
 }
 
 test {
