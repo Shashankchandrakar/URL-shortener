@@ -2,7 +2,8 @@ plugins {
     id "java"
     id "application"
     id "io.spring.dependency-management" version("1.0.11.RELEASE")
-    id "org.springframework.boot" version("2.5.1")
+    id "org.springframework.boot" version("2.5.2")
+    id "io.freefair.lombok" version "6.0.0-m2"
 }
 group "com.system.design"
 version "1.0.0-SNAPSHOT"
@@ -14,11 +15,11 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-    testImplementation(group: "org.springframework.boot" , name: "spring-boot-starter-test")
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb'
+    testImplementation(group: "org.springframework.boot", name: "spring-boot-starter-test")
 }
 
-test{
+test {
     useJUnitPlatform()
 }
