@@ -1,20 +1,42 @@
 package com.system.design.service.impl;
 
+import com.system.design.entity.URLShortEntity;
+import com.system.design.repository.UrlShortRepository;
+import com.system.design.service.IDGenerationService;
+import com.system.design.service.URLHashService;
 import com.system.design.service.URLService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
+@Service
 public class URLServiceImpl implements URLService {
 
-    private static final String BASE_62 = "012345689abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private final URLHashService urlHashService;
+    private final IDGenerationService idGenerationService;
+    private final UrlShortRepository urlShortRepository;
 
     @Override
-    public String intToBase62(Integer integer) {
-        String hash = "";
+    public String getHashForURL(String url) {
+        long id = idGenerationService.getIdForURL();
+        String hash = urlHashService.longToBase62Hash(id);
+        return saveURLShortEntity(hash,url).getHash();
+    }
 
-        while (integer > 0) {
-            hash = hash.concat(String.valueOf(BASE_62.charAt(integer % 62)));
-            integer = integer / 62;
-        }
+    @Override
+    public String getURLFromHash(String hash) {
+        return urlShortRepository.findByHash(hash).getUrl();
+    }
 
-        return hash;
+    private URLShortEntity saveURLShortEntity(String hash, String url) {
+        URLShortEntity urlShortEntity = getURLShortEntity(hash,url);
+        return urlShortRepository.save(urlShortEntity);
+    }
+
+    private URLShortEntity getURLShortEntity(String hash, String url){
+        URLShortEntity urlShortEntity = new URLShortEntity();
+        urlShortEntity.setUrl(url);
+        urlShortEntity.setHash(hash);
+        return urlShortEntity;
     }
 }
